@@ -1,0 +1,64 @@
+{% extends "layouts/base.html.twig" %}
+{% block head %}
+    {{ parent() }}
+    <link rel="stylesheet" href="../src-client/css/backend.css">
+    <link href="../src-client/css/fontawesome-all.min.css" rel="stylesheet" media="all">
+{% endblock %}
+
+{% block body %}
+ <div class="page-wrapper">
+        <aside class="menu-sidebar">
+            <div class="menu-sidebar-content">
+                <nav class="sidebar">
+                    <ul class="navbar-list">
+                        <li>
+                            <a href="{{ path('backend') }}">
+                            <i class="fas fa-home"></i>Start</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_logout') }}">
+                            <i class="fas fa-chart-line"></i>Temperaturen</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_logout') }}">
+                            <i class="fas fa-user-circle"></i>Benutzerverwaltung</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_logout') }}">
+                            <i class="fas fa-sign-out-alt"></i>Ausloggen</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+        <div class="page-container">
+            <header class="header">
+                <div class="header-content">
+                    <div class="container">
+                        <div class="header-wrap">
+                            <div class="account-item clearfix js-item-menu">
+                                <div class="content">
+                                    <a>Hallo {{ app.user.username|capitalize }}, es ist der 04.05.2021 um 15:35!</a>
+                                </div>
+                            </div>       
+                        </div>
+                    </div>
+                </header>
+            <div class="main-content">
+                <div class="header-content">
+                    <div class="container">
+                            <div class="content-box">
+                                <h3 class="title-3">
+                                    <i class="fas fa-users"></i>Herzlich Willkommen!</h3>
+                                    <p> Guten Tag {{ app.user.username|capitalize }},
+                                        <br><br>
+                                        du warst zuletzt am 04.05.2021 um 15:35 online gewesen
+                                    </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
