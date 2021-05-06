@@ -11,8 +11,29 @@ class BackendController extends AbstractController
     /**
      * @Route("/backend", name="backend")
      */
-    public function list():Response
+    public function backend():Response
     {
-        return $this->render('backend/start.html.twig');
+        $lastLogin = $this->getUser()->getLastLogin();
+
+        return $this->render('backend/start.html.twig',
+        [
+            'lastLogin' => $lastLogin
+        ]);
+    }
+
+    /**
+     * @Route("/backend/users", name="users")
+     */
+    public function users():Response
+    {
+        return $this->render('backend/user.html.twig');
+    }
+
+        /**
+     * @Route("/backend/tempratures", name="tempratures")
+     */
+    public function tempratures():Response
+    {
+        return $this->render('backend/temps.html.twig');
     }
 }
