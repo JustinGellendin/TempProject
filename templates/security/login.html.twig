@@ -1,7 +1,6 @@
 {% extends "layouts/base.html.twig" %}
 {% block head %}
     {{ parent() }}
-    <link rel="stylesheet" href="../src-client/css/login.css">
 {% endblock %}
 
 {% block body %}
@@ -14,22 +13,22 @@
 					<span class="title">TEMPtation - Backend</span>
 					<div class="input-wrapper">
 						<div class="wrap-input">
-							<input type="text" name="username" id="inputUsername" class="login-input" placeholder="Benutzername" required autofocus>
+							<input type="text" name="username" id="inputUsername" class="login-input" placeholder="Benutzername" required>
 							<span class="symbol">
-								<span class="lnr lnr-users"></span>
+								<span class="far fa-user"></span>
 							</span>
 						</div>
 						<div class="wrap-input">
 							<input type="password" class="login-input form-control" placeholder="Passwort" name="password" id="inputPassword" required>
 							<span class="symbol">
-								<span class="lnr lnr-lock"></span>
+								<span class="fas fa-key"></span>
 							</span>
 						</div>
 					</div>
-					<div class="checkbox">
+					{# <div class="checkbox">
 						<input class="input-checkbox" id="remember" type="checkbox" name="remember-me">
 						<label class="label-checkbox" for="remember">Eingeloggt bleiben</label>
-					</div>
+					</div> #}
 					<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 					<div class="button-wrapper">
 						<button class="login-button" type="submit">Anmelden</button>
