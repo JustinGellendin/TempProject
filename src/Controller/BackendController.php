@@ -13,7 +13,11 @@ class BackendController extends AbstractController
      */
     public function backend():Response
     {
-        $lastLogin = $this->getUser()->getLastLogin();
+        $lastLogin = null;
+        $user = $this->getUser();
+        if ($user && $user instanceof User){
+            $lastLogin = $user->getLastLogin();
+        }
 
         return $this->render('backend/start.html.twig',
         [
