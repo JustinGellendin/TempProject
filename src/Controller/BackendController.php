@@ -34,10 +34,10 @@ class BackendController extends AbstractController
         return $this->render('backend/user.html.twig');
     }
 
-        /**
-     * @Route("/backend/tempratures", name="tempratures")
+    /**
+     * @Route("/backend/temperatures", name="temperatures")
      */
-    public function tempratures():Response
+    public function temperatures():Response
     {
         return $this->render('backend/temps.html.twig');
     }

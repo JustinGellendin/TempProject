@@ -56,6 +56,11 @@ class User implements UserInterface
         return (string) $this->username;
     }
 
+    /**
+     * @param string $username
+     *
+     * @return $this
+     */
     public function setUsername(string $username): self
     {
         $this->username = $username;
@@ -90,6 +95,11 @@ class User implements UserInterface
         return (string) $this->password;
     }
 
+    /**
+     * @param string $password
+     *
+     * @return $this
+     */
     public function setPassword(string $password): self
     {
         $this->password = $password;
@@ -97,12 +107,18 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getLastLogin()
+    /**
+     * @return \DateTime
+     */
+    public function getLastLogin(): \DateTime
     {
         return $this->lastLogin;
     }
 
-    public function setLastLogin(\DateTime $lastLogin)
+    /**
+     * @param \DateTime $lastLogin
+     */
+    public function setLastLogin(\DateTime $lastLogin): void
     {
         $this->lastLogin = $lastLogin;
     }
