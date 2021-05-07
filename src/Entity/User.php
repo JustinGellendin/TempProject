@@ -110,7 +110,7 @@ class User implements UserInterface
     /**
      * @return \DateTime
      */
-    public function getLastLogin(): \DateTime
+    public function getLastLogin(): ?\DateTime
     {
         return $this->lastLogin;
     }
