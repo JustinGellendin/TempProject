@@ -13,12 +13,14 @@
                             <div class="content-box">
                                 <h3 class="title">
                                     <i class="fas fa-users"></i>Herzlich Willkommen!</h3>
-                                    <p> Guten Tag {{ app.user.username|capitalize }}
+                                    <p> Hallo {{ app.user.username|capitalize }}
                                         {% if lastLogin is defined and lastLogin is not empty %}
                                             ,
                                             <br>
                                             <br>
                                             du warst zuletzt am {{ lastLogin|date("d/m/Y \\u\\m H:i", "Europe/Paris") }} online.
+                                        {% else %}
+                                            !
                                         {% endif %}
                                     </p>
                             </div>
