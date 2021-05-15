@@ -1,0 +1,36 @@
+{% extends "layouts/base.html.twig" %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+{% block body %}
+ <div class="page-wrapper">
+    {% include 'partials/backend-side-menu.html.twig' %}
+        <div class="page-container">
+    	{% include 'partials/backend-header.html.twig' %}
+            <div class="main-content">
+                <div class="header-content">
+                    <div class="container">
+                            <div class="content-box">
+                                <h3 class="title flex">
+                                    <i class="fas fa-user-plus"></i>Add User
+                                    </a>
+                                </h3>     
+                            {% for flashError in app.flashes('verify_email_error') %}
+                                <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+                            {% endfor %}       
+                            {{ form_start(registrationForm) }}
+                                {{ form_row(registrationForm.username) }}
+                                {{ form_row(registrationForm.plainPassword, {
+                                    label: 'Password'
+                                }) }}
+                                {{ form_row(registrationForm.agreeTerms) }}
+
+                                <button type="submit" class="btn">Register</button>
+                            {{ form_end(registrationForm) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

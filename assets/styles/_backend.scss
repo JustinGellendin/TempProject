@@ -8,6 +8,8 @@ body {
 a {
     text-decoration: none;
     outline: none;
+    color: inherit;
+    width: inherit;
 }
 
 .page-wrapper {
@@ -131,4 +133,75 @@ a {
 .page-container {
     background: #e5e5e5;
     padding-left: 300px;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.user-add {
+    display: flex;
+    justify-content: flex-end;
+    flex: auto;
+    margin-right: 0 !important;
+
+    &:hover {   
+        transition: 0.2s;
+        color: #177e1f; 
+    }
+}
+
+.user-list {
+    font-size: 20px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 25px 0;
+    border-bottom: grey 1px solid;
+
+    .username {
+        display: flex;
+        align-items: center;
+        font-size: 21px;
+    }
+
+    .name {
+        padding: 0 20px;
+    }
+
+    .user-buttons {
+        display: flex;
+        justify-content: flex-end;
+        flex: auto;
+
+        .edit {
+            display: flex;
+
+            &:hover {
+                transition: 0.2s;
+                color: #177e1f; 
+            }
+        }
+
+        .delete {
+            display: flex;
+            
+            &:hover {
+                transition: 0.2s;
+                color: #ff4000; 
+            }
+        }
+
+        .toggle {
+            display: flex;
+            margin: 0 25px;
+
+            &:hover {
+                transition: 0.2s;
+                color: #177e1f; 
+            }
+        }
+    }
 }

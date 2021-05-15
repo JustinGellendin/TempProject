@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php
 
 namespace App\Entity;
@@ -11,8 +10,16 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  */
-class User implements UserInterface
+class User implements UserInterface 
 {
+    public function __construct()
+    {
+        if (empty($this->registrationDate)) 
+        {
+            $this->registerDate = new \DateTime('now');
+        }
+    }
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -41,6 +48,16 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $activated;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $registrationDate;
 
     public function getId(): ?int
     {
@@ -143,151 +160,28 @@ class User implements UserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
-}
-=======
-<?php
 
-namespace App\Entity;
-
-use App\Repository\UserRepository;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
-
-/**
- * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ORM\Table(name="`user`")
- */
-class User implements UserInterface
-{
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
-    /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     */
-    private $username;
-
-    /**
-     * @ORM\Column(type="json")
-     */
-    private $roles = [];
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @var \DateTime
-     */
-    private $lastLogin;
-
-    /**
-     * @var string The hashed password
-     * @ORM\Column(type="string")
-     */
-    private $password;
-
-    public function getId(): ?int
+    public function getActivated(): ?bool
     {
-        return $this->id;
+        return $this->activated;
     }
 
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
-    public function getUsername(): string
+    public function setActivated(bool $activated): self
     {
-        return (string) $this->username;
-    }
-
-    /**
-     * @param string $username
-     *
-     * @return $this
-     */
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
+        $this->activated = $activated;
 
         return $this;
     }
 
-    /**
-     * @see UserInterface
-     */
-    public function getRoles(): array
+    public function getRegistrationDate(): ?\DateTimeInterface
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
+        return $this->registrationDate;
     }
 
-    public function setRoles(array $roles): self
+    public function setRegistrationDate(\DateTimeInterface $registrationDate): self
     {
-        $this->roles = $roles;
+        $this->registrationDate = $registrationDate;
 
         return $this;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function getPassword(): string
-    {
-        return (string) $this->password;
-    }
-
-    /**
-     * @param string $password
-     *
-     * @return $this
-     */
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getLastLogin(): ?\DateTime
-    {
-        return $this->lastLogin;
-    }
-
-    /**
-     * @param \DateTime $lastLogin
-     */
-    public function setLastLogin(\DateTime $lastLogin): void
-    {
-        $this->lastLogin = $lastLogin;
-    }
-
-    /**
-     * Returning a salt is only needed, if you are not using a modern
-     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
-     *
-     * @see UserInterface
-     */
-    public function getSalt(): ?string
-    {
-        return null;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function eraseCredentials(): void
-    {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
     }
 }
->>>>>>> adds eventually some changes i don't remember doing

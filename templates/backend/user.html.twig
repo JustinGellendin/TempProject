@@ -11,10 +11,33 @@
                 <div class="header-content">
                     <div class="container">
                             <div class="content-box">
-                                <h3 class="title-3">
-                                    <i class="fas fa-users"></i>tbc</h3>
-                                    <p> tbc
-                                    </p>
+                                <h3 class="title flex">
+                                    <i class="fas fa-user-circle"></i>Benutzerverwaltung
+                                    <a href="{{ path('user-create') }}">
+                                        <i class="fas fa-plus-circle user-add"></i>
+                                    </a>
+                                </h3>
+                                {% for users in users %}
+                                <div class="user-list">
+                                    <div class="username">
+                                        {% if users.activated %}
+                                            <i class="fas fa-user-circle activated"></i>
+                                        {% else %}
+                                            <i class="fas fa-user-circle deactived"></i>
+                                        {% endif %}
+                                        <p class="name">{{ users.username }}</p>
+                                    </div>
+                                    <div class="user-buttons">
+                                        <a href="{{ path('user-edit', {id: users.id}) }}">
+                                            <i class="fas fa-user-edit edit"></i>
+                                        </a>
+                                        <i class="fas fa-check-circle toggle"></i>
+                                        <a href="{{ path('user-delete', {id: users.id}) }}">
+                                            <i class="fas fa-trash delete"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
