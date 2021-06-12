@@ -12,7 +12,7 @@
                     <div class="container">
                             <div class="content-box">
                                 <h3 class="title flex">
-                                    <i class="fas fa-user-plus"></i>Add User
+                                    <i class="fas fa-user-plus"></i>Neuer Benutzer
                                     </a>
                                 </h3>     
                             {% for flashError in app.flashes('verify_email_error') %}
@@ -21,11 +21,13 @@
                             {{ form_start(registrationForm) }}
                                 {{ form_row(registrationForm.username) }}
                                 {{ form_row(registrationForm.plainPassword, {
-                                    label: 'Password'
+                                    label: 'Passwort'
                                 }) }}
-                                {{ form_row(registrationForm.agreeTerms) }}
+                                 {{ form_row(registrationForm.repeatedPassword, {
+                                    label: 'Passwort wiederholen'
+                                }) }}
 
-                                <button type="submit" class="btn">Register</button>
+                                <button type="submit" class="btn">Benutzer hinzufügen</button>
                             {{ form_end(registrationForm) }}
                             </div>
                         </div>

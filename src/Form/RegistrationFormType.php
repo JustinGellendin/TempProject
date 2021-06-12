@@ -18,37 +18,46 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('username')
-            ->add('agreeTerms', CheckboxType::class, [
+            ->add('plainPassword', PasswordType::class,
+            [
                 'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
+                'constraints' => 
+                [
+                    new NotBlank(
+                        [
+                            'message' => 'Bitte trag ein Passwort ein!',
+                        ]
+                    ),
+                    new Length(
+                        [
+                            'min' => 6,
+                            'minMessage' => 'Das Passwort sollte mindestens {{ limit }} Zeichen enthalten',
+                            'max' => 4096,
+                        ]
+                    ),
                 ],
             ])
-            ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
+            ->add('repeatedPassword', PasswordType::class,
+            [
                 'mapped' => false,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                    ]),
+                'constraints' => 
+                [
+                    new NotBlank(
+                        [
+                            'message' => 'Bitte wiederhole das Passwort!',
+                        ]
+                    ),
                 ],
-            ])
-        ;
+            ]
+        );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => User::class,
-        ]);
+        $resolver->setDefaults(
+            [
+                'data_class' => User::class,
+            ]
+        );
     }
 }

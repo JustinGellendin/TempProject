@@ -20,7 +20,7 @@ class UserController extends BaseController
     {
         parent::__construct($entityManager);
 
-        $userRepository = $this->getRepository(User::class);
+        $this->userRepository = $this->getRepository(User::class);
     } 
 
     /**
@@ -42,26 +42,24 @@ class UserController extends BaseController
     /**
      * @Route("/backend/create", name="user-create")
      */
-
     public function create(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
+        if ($form->isSubmitted() && $form->isValid()) 
+        {
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )
-            );
+            )
+            ->setRegistrationDate(new \DateTime('now'));;
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-            // do anything else you need here, like send an email
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('user-list');
         }
@@ -94,11 +92,28 @@ class UserController extends BaseController
      */
     public function delete(int $id): Response
     {
-        $userToDelete = $userRepository->findOneBy(['id' => $id]);
+        $userToDelete = $this->userRepository->findOneBy(['id' => $id]);
 
-        $this->$entityManager->remove($userToDelete);
-        $this->$entityManager->flush();
+        $this->entityManager->remove($userToDelete);
+        $this->entityManager->flush();
 
         return $this->redirectToRoute('user-list');
     }
+
+    /**
+     * @Route("/backend/toggleActiveState/{id}", name="user-active")
+     */
+    public function toggleActiveState(int $id): Response
+    {
+        $userToToggle = $this->userRepository->findOneBy(['id' => $id]);
+        $state = $userToToggle->getActivated();
+
+        $userToToggle->setActivated(!$state);
+
+        $this->entityManager->persist($userToToggle);
+        $this->entityManager->flush();
+
+        return $this->redirectToRoute('user-list');
+    }
+
 }
