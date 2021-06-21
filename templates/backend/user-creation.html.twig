@@ -19,7 +19,9 @@
                                 <div class="alert alert-danger" role="alert">{{ flashError }}</div>
                             {% endfor %}       
                             {{ form_start(registrationForm) }}
-                                {{ form_row(registrationForm.username) }}
+                                {{ form_row(registrationForm.username, {
+                                    label: 'Benutzername'
+                                }) }}
                                 {{ form_row(registrationForm.plainPassword, {
                                     label: 'Passwort'
                                 }) }}

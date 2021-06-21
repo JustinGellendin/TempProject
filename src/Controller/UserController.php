@@ -28,9 +28,7 @@ class UserController extends BaseController
      */
     public function users():Response
     {
-        $userRepository = $this->entityManager->getRepository(User::class);
-
-        $allUsers = $userRepository->findAll();
+        $allUsers = $this->userRepository->findAll();
 
         return $this->render('backend/user.html.twig', 
             [
@@ -42,7 +40,7 @@ class UserController extends BaseController
     /**
      * @Route("/backend/create", name="user-create")
      */
-    public function create(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function create(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -50,6 +48,14 @@ class UserController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) 
         {
+            if ($form->get('plainPassword') !== $form->get('repeatedPassword'))
+            {
+                return $this->addFlash(
+                    'notice',
+                    'ungleiches passwort'
+                );
+            }
+
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
@@ -74,17 +80,11 @@ class UserController extends BaseController
     /**
      * @Route("/backend/edit/{id}", name="user-edit")
      */
-    public function edit():Response
+    public function edit(int $id):Response
     {
-        $userRepository = $this->entityManager->getRepository(User::class);
+        $currentUser = $this->userRepository->findBy(['id' => $id]);
 
-        $allUsers = $userRepository->findAll();
-
-        return $this->render('backend/user.html.twig', 
-            [
-                'users' => $allUsers,
-            ]
-        );
+        return $this->render('backend/user-edit.html.twig');
     }
 
     /**

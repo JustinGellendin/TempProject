@@ -76,6 +76,11 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
             throw new CustomUserMessageAuthenticationException('Der User wurde nicht gefunden.');
         }
 
+        if (!$user->getActivated())
+        {
+            throw new CustomUserMessageAuthenticationException('Der Benutzer ist nicht aktiviert, wende dich an einen Administrator.');
+        }
+
         return $user;
     }
 
