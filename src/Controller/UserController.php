@@ -80,9 +80,35 @@ class UserController extends BaseController
     /**
      * @Route("/backend/edit/{id}", name="user-edit")
      */
-    public function edit(int $id):Response
+    public function edit(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
-        $currentUser = $this->userRepository->findBy(['id' => $id]);
+        $user = new User();
+        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) 
+        {
+            if ($form->get('plainPassword') !== $form->get('repeatedPassword'))
+            {
+                return $this->addFlash(
+                    'notice',
+                    'ungleiches passwort'
+                );
+            }
+
+            $user->setPassword(
+                $passwordEncoder->encodePassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            )
+            ->setRegistrationDate(new \DateTime('now'));;
+
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+
+            return $this->redirectToRoute('user-list');
+        }
 
         return $this->render('backend/user-edit.html.twig');
     }

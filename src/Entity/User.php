@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -18,6 +20,7 @@ class User implements UserInterface
         {
             $this->registerDate = new \DateTime('now');
         }
+        $this->logs = new ArrayCollection();
     }
 
     /**
@@ -58,6 +61,11 @@ class User implements UserInterface
      * @ORM\Column(type="datetime")
      */
     private $registrationDate;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Logs::class, mappedBy="user")
+     */
+    private $logs;
 
     public function getId(): ?int
     {
@@ -181,6 +189,36 @@ class User implements UserInterface
     public function setRegistrationDate(\DateTimeInterface $registrationDate): self
     {
         $this->registrationDate = $registrationDate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Logs[]
+     */
+    public function getLogs(): Collection
+    {
+        return $this->logs;
+    }
+
+    public function addLog(Logs $log): self
+    {
+        if (!$this->logs->contains($log)) {
+            $this->logs[] = $log;
+            $log->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLog(Logs $log): self
+    {
+        if ($this->logs->removeElement($log)) {
+            // set the owning side to null (unless already changed)
+            if ($log->getUser() === $this) {
+                $log->setUser(null);
+            }
+        }
 
         return $this;
     }
