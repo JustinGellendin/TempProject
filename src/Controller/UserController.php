@@ -83,8 +83,6 @@ class UserController extends BaseController
     public function edit(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
-        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) 
         {
@@ -101,8 +99,7 @@ class UserController extends BaseController
                     $user,
                     $form->get('plainPassword')->getData()
                 )
-            )
-            ->setRegistrationDate(new \DateTime('now'));;
+            );
 
             $this->entityManager->persist($user);
             $this->entityManager->flush();
