@@ -33,7 +33,9 @@ public class TemperaturÜberwachung {
         String name = sc.next();
         System.out.println("Passwort:");
         String passw = sc.next();
-        calcInput.generate();
+        System.out.println("---------------------------------------------------");
+        calcInput.showInput();
+        System.out.println("---------------------------------------------------");
                 
     }
 }

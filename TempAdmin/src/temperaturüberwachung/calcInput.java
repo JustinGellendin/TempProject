@@ -19,7 +19,7 @@ public class calcInput {
 
         
         
-    public static void generate(){
+    public static void showInput(){
         
             String url = "jdbc:mysql://85.214.105.212:3306/school?serverTimezone=Europe/Paris";
         String user = "Samuel";
@@ -27,17 +27,20 @@ public class calcInput {
         
      
      Connection con = DriverManager.getConnection(url, user, pass);
-        System.out.println("Verbindung erfolgreich hergestellt");
+  
       Statement stmt = con.createStatement();
       ResultSet rs;
-      rs = stmt.executeQuery("SELECT adresse FROM sensoren");
+      rs = stmt.executeQuery("SELECT * FROM sensoren");
      
      
                 
                  while ( rs.next() ) {
-                String adresse = rs.getString("adresse");
-                System.out.println(adresse);
+                String id = rs.getString("SensorNr");
+                String server = rs.getString("serverschrank");
+                String maxTemp = rs.getString("maximalTemperatur");
+                        
+                System.out.println("|*| Sensor Nummer:"+id+" | Schrank: "+server+" | MaxTemp: "+maxTemp+" |*|");
             }
-      System.out.println(rs);
+  
     }
 }
