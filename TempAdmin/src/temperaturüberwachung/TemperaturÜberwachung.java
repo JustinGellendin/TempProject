@@ -3,6 +3,7 @@ package temperaturüberwachung;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Scanner;
 
 /**
  *
@@ -26,6 +27,13 @@ public class TemperaturÜberwachung {
             System.out.println(e.getMessage());
         }
         
-     
+        System.out.println("Willkommen in der Temperaturüberachung! Bitte Anmelden");
+        System.out.println("Nutzernamee:");
+        Scanner sc = new Scanner(System.in);
+        String name = sc.next();
+        System.out.println("Passwort:");
+        String passw = sc.next();
+        
     }
 }
+
