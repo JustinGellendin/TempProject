@@ -2,10 +2,7 @@ package temperaturüberwachung;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Scanner;
 
 /**
  *
@@ -18,11 +15,10 @@ public class TemperaturÜberwachung {
         String url = "jdbc:mysql://85.214.105.212:3306/school?serverTimezone=Europe/Paris";
         String user = "Samuel";
         String pass = "vK?327ec";
-        Connection conn = null;
         
         try {
         // Verbindung aufbauen
-        conn = DriverManager.getConnection(url, user, pass);
+        Connection con = DriverManager.getConnection(url, user, pass);
         System.out.println("Verbindung erfolgreich hergestellt");
         } 
         catch (SQLException e) {
@@ -30,34 +26,6 @@ public class TemperaturÜberwachung {
             System.out.println(e.getMessage());
         }
         
-        System.out.println("Willkommen in der Temperaturüberachung! Bitte Anmelden");
-        System.out.println("Nutzername:");
-        Scanner sc = new Scanner(System.in);
-        String name = sc.next();
-        System.out.println("Passwort:");
-        String passw = sc.next();
-        
-        try
-        {
-        Statement stm = conn.createStatement();
-        ResultSet rs = stm.executeQuery("SELECT * FROM user");
-        }
-        catch (Exception e)
-        {
-            System.out.println("Fehler:");
-            System.out.println(e.getMessage());
-        }
-         System.out.println("");
-        
-        try
-        {
-        conn.close();
-        }
-        catch(Exception e)
-        {
-            System.out.println("Fehler:");
-            System.out.println(e.getMessage());
-        }
-        
+     
     }
 }
