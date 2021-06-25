@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Form\RegistrationFormType;
+use App\Form\EditFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -40,7 +41,7 @@ class UserController extends BaseController
     /**
      * @Route("/backend/create", name="user-create")
      */
-    public function create(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function create(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -48,7 +49,7 @@ class UserController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) 
         {
-            if ($form->get('plainPassword') !== $form->get('repeatedPassword'))
+            if ($form->get('plainPassword')->getData() !== $form->get('repeatedPassword')->getData())
             {
                 return $this->addFlash(
                     'notice',
@@ -80,9 +81,13 @@ class UserController extends BaseController
     /**
      * @Route("/backend/edit/{id}", name="user-edit")
      */
-    public function edit(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function edit(int $id, Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         $user = new User();
+
+        $form = $this->createForm(EditFormType::class, $user);
+        $form->handleRequest($request);
+        $form['username']->setData($this->userRepository->findOneBy(['id' => $id])->getUsername());
 
         if ($form->isSubmitted() && $form->isValid()) 
         {
@@ -107,7 +112,11 @@ class UserController extends BaseController
             return $this->redirectToRoute('user-list');
         }
 
-        return $this->render('backend/user-edit.html.twig');
+        return $this->render('backend/user-edit.html.twig',
+            [
+                'editForm' => $form->createView(),
+            ]
+        );
     }
 
     /**

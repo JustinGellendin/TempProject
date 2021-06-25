@@ -15,6 +15,21 @@
                                     <i class="fas fa-user-plus"></i>Editieren
                                     </a>
                                 </h3>
+                                {{ form_start(editForm) }}
+                                {{ form_row(editForm.username, {
+                                    label: 'Benutzername'
+                                }) }}
+                                {{ form_row(editForm.plainPassword, {
+                                    label: 'Passwort'
+                                }) }}
+                                {{ form_row(editForm.repeatedPassword, {
+                                    label: 'Passwort wiederholen'
+                                }) }}
+                                {{ form_row(editForm.isActive, {
+                                    label: 'Aktiviert'
+                                }) }}
+                                <button type="submit" class="btn">Speichern</button>
+                            {{ form_end(editForm) }}
                             </div>
                         </div>
                     </div>
