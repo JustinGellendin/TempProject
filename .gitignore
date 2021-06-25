@@ -54,3 +54,4 @@
 # phpstorm project folders
 .idea
 /TempAdmin/build/
+/TempAdmin/dist/
