@@ -11,6 +11,8 @@ package temperaturüberwachung;
  */
 public class calcInput {
     public static void generate(){
-        
+      System.out.println("Willkommen in der Temperaturüberachung! Bitte Anmelden");
+      
+      
     }
 }
