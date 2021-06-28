@@ -10,22 +10,20 @@ import java.util.Scanner;
  * @author samyo
  */
 public class TemperaturÜberwachung {
+     public static String url = "jdbc:mysql://85.214.105.212:3306/school?serverTimezone=Europe/Paris";
+     public static String user = "Samuel";
+     public static String pass = "vK?327ec";
+    
+     public static Connection con = DriverManager.getConnection(url, user, pass);
 
+    
     public static void main(String[] args) {
         
-        String url = "jdbc:mysql://85.214.105.212:3306/school?serverTimezone=Europe/Paris";
-        String user = "Samuel";
-        String pass = "vK?327ec";
-        
-        try {
+     
         // Verbindung aufbauen
-        Connection con = DriverManager.getConnection(url, user, pass);
+      
         System.out.println("Verbindung erfolgreich hergestellt");
-        } 
-        catch (SQLException e) {
-            System.out.println("Fehler:");
-            System.out.println(e.getMessage());
-        }
+   
         
         System.out.println("Willkommen in der Temperaturüberachung! Bitte Anmelden");
         System.out.println("Nutzernamee:");
@@ -34,7 +32,7 @@ public class TemperaturÜberwachung {
         System.out.println("Passwort:");
         String passw = sc.next();
         
-        calcInput.showInput();
+        calcInput.showInput(con);
         
                 
     }
