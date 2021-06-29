@@ -1,13 +1,15 @@
 package temperaturüberwachung;
 
 import java.util.Scanner;
+import java.sql.Connection;
+
 
 /**
  *
  * @author samyo
  */
 public class MainMenu {
-    public static void menu(){
+    public static void menu(Connection con){
         int input = 0;
         boolean x = true;
         while (x)
