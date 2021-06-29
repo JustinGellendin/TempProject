@@ -13,6 +13,7 @@ import java.util.Objects;
 /**
  *
  * @author samyo
+ * @author Jk
  */
 public class TemperaturÜberwachung {
 
@@ -63,7 +64,6 @@ public class TemperaturÜberwachung {
                 if(result.verified && Objects.equals(nn, name))
                     {
                         System.out.println("Herzlich Willkommen " + name + "!");
-                        System.out.println("");
                         auth = true;
                     }
                 else
@@ -78,9 +78,7 @@ public class TemperaturÜberwachung {
                 System.out.println(e.getMessage());
             }
         }
-        
-        MainMenu.menu();
-        
+        Sensory.modifyAdress(con);
         //Datenbankverbindung schließen
         try{
         con.close();
