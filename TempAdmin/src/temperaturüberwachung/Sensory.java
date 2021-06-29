@@ -124,16 +124,16 @@ public class Sensory {
     public static void modifyRack(Connection con){
      int id = modifyPrompt(con);
         Scanner sc = new Scanner(System.in);
-        System.out.println("Bitte geben Sie die neue Adresse für den Sensor ein.");
-             String newAdress = sc.nextLine();
-             System.out.println("newAdress: "+newAdress);
+        System.out.println("Bitte geben Sie das neue Rack für den Sensor ein.");
+             String newRack = sc.nextLine();
+             System.out.println("newRack: "+newRack);
             String yesNo = modifyAssure(sc);
                    
             if(yesNo.equals("Y") == true){
                 try{
                  Statement stmt = con.createStatement();
                  ResultSet rs;
-                  String query = "UPDATE sensor SET adress = '"+newAdress+"' WHERE id = "+id+"";
+                  String query = "UPDATE sensor SET server_rack = '"+newRack+"' WHERE id = "+id+"";
                    PreparedStatement preparedStmt = con.prepareStatement(query);
                     preparedStmt.executeUpdate();
                     rs = stmt.executeQuery("SELECT * FROM sensor WHERE id = "+id+"");
@@ -165,7 +165,7 @@ public class Sensory {
     }   
         public static Integer modifyPrompt(Connection con){
         showInput(con);  
-      System.out.println("Bitte geben Sie die Nummer ein, um die Adresse zu verändern");
+      System.out.println("Bitte geben Sie die Nummer ein, um den Wert zu verändern");
       Scanner sc = new Scanner(System.in);
      int id = Integer.parseInt(sc.next());
         

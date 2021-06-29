@@ -78,8 +78,8 @@ public class TemperaturÜberwachung {
                 System.out.println(e.getMessage());
             }
         }
-        
-        MainMenu.menu();
+        Sensory.modifyAdress(con);
+        Sensory.modifyRack(con);
         //Datenbankverbindung schließen
         try{
         con.close();
