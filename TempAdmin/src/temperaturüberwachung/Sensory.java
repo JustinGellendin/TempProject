@@ -16,25 +16,7 @@ import java.util.Scanner;
 
 
 public class Sensory {
-    
-
-        
-        
-    public static void showInput(Connection con){   
-        try {
-         Statement stmt = con.createStatement();
-          ResultSet rs;
-          rs = stmt.executeQuery("SELECT * FROM sensor");
-         displayResults(rs);
-        }catch (SQLException e){
-          System.out.println(e.getMessage());
-        }
-        
-
-        
-    }
-    
-    public static void modifyMax(Connection con){
+      public static void modifyMax(Connection con){
       System.out.println("Bitte geben Sie die Nummer ein, um die Maximaltemperatur zu verändern");
       Scanner sc = new Scanner(System.in);
      int id = Integer.parseInt(sc.next());
@@ -190,6 +172,17 @@ public class Sensory {
           yesNo = sc.next();
         }
         return yesNo;
+    }
+    
+        public static void showInput(Connection con){   
+        try {
+         Statement stmt = con.createStatement();
+          ResultSet rs;
+          rs = stmt.executeQuery("SELECT * FROM sensor");
+         displayResults(rs);
+        }catch (SQLException e){
+          System.out.println(e.getMessage());
+        }   
     }
 } 
 
