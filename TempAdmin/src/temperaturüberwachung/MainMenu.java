@@ -48,7 +48,7 @@ public class MainMenu {
                     System.out.println("punkt 3");
                 break;
                 case 4:
-                    Sensory.modifyMax(con);
+                    Sensory.modifyMax(con, name);
                 break;
                 case 5:
                     Sensory.modifyManufac(con);
