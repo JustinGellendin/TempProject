@@ -20,7 +20,8 @@ class User implements UserInterface
         {
             $this->registerDate = new \DateTime('now');
         }
-        $this->logs = new ArrayCollection();
+
+        $this->logs= new ArrayCollection();
     }
 
     /**
@@ -63,9 +64,9 @@ class User implements UserInterface
     private $registrationDate;
 
     /**
-     * @ORM\OneToMany(targetEntity=Logs::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Log::class, mappedBy="user")
      */
-    private $logs;
+    private $log;
 
     public function getId(): ?int
     {
@@ -194,28 +195,31 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|Logs[]
+     * @return Collection|Log[]
      */
-    public function getLogs(): Collection
+    public function getLog(): Collection
     {
-        return $this->logs;
+        return $this->log;
     }
 
-    public function addLog(Logs $log): self
+    public function addLog(Log $log): self
     {
-        if (!$this->logs->contains($log)) {
-            $this->logs[] = $log;
+        if (!$this->log->contains($log))
+        {
+            $this->log[] = $log;
             $log->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeLog(Logs $log): self
+    public function removeLog(Log $log): self
     {
-        if ($this->logs->removeElement($log)) {
+        if ($this->log->removeElement($log)) 
+        {
             // set the owning side to null (unless already changed)
-            if ($log->getUser() === $this) {
+            if ($log->getUser() === $this)
+             {
                 $log->setUser(null);
             }
         }

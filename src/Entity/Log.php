@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\LogsRepository;
+use App\Repository\LogRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=LogsRepository::class)
+ * @ORM\Entity(repositoryClass=LogRepository::class)
  */
-class Logs
+class Log
 {
     /**
      * @ORM\Id
@@ -18,13 +18,13 @@ class Logs
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="logs")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="log")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Sensors::class, inversedBy="logs")
+     * @ORM\ManyToOne(targetEntity=Sensor::class, inversedBy="log")
      * @ORM\JoinColumn(nullable=false)
      */
     private $sensor;
@@ -51,12 +51,12 @@ class Logs
         return $this;
     }
 
-    public function getSensor(): ?Sensors
+    public function getSensor(): ?Sensor
     {
         return $this->sensor;
     }
 
-    public function setSensor(?Sensors $sensor): self
+    public function setSensor(?Sensor $sensor): self
     {
         $this->sensor = $sensor;
 

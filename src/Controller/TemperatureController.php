@@ -2,38 +2,60 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Controller\BaseController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Temperature;
 
 class TemperatureController extends BaseController
 {
+    private $temperatureRepository;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        parent::__construct($entityManager);
+
+        $this->temperatureRepository = $this->getRepository(Temperature::class);
+    } 
+
     /**
-     * @Route("/backend/temperatures", name="temperatures")
+     * @Route("/backend/graph", name="graph")
      */
-    public function temperatures(ChartBuilderInterface $chartBuilder): Response
+    public function graph(ChartBuilderInterface $chartBuilder): Response
     {
         $chart = $chartBuilder->createChart(Chart::TYPE_LINE);
+        $labels = $this->getLabels();
+        $data = $this->getData();
+
         $chart->setData(
             [
-            'labels' => ['0 Uhr', '0 Uhr', '0 Uhr', '0 Uhr', '0 Uhr', '0 Uhr', '0 Uhr'],
-            'datasets' => [
-                [
-                    'label' => 'Temperatur',
-                    'backgroundColor' => 'rgb(255, 99, 132)',
-                    'borderColor' => 'rgb(255, 99, 132)',
-                    'data' => [0, 10, 5, 2, 20, 30, 45],
+                'labels' => $labels,
+                'datasets' => 
+            [        
+                    [
+                        'label' => 'Temperatur',
+                        'backgroundColor' => 'rgb(255, 99, 132)',
+                        'borderColor' => 'rgb(255, 99, 132)',
+                        'data' => $data,
+                    ],
                 ],
-            ],
-        ]);
+            ]
+        );
 
         $chart->setOptions(
             [
+                'scaleGridLineColor' => "rgba(225, 255, 255, 0.02)",
+                'scaleOverride' => true,
+                'animation' => true,
                 'responsive' => true,
                 'maintainAspectRatio' => true,
+                'tooltips' => [
+                    'mode' => 'index',
+                    'intersect' => false
+                ],
                 'scales' => 
                 [
                     'yAxes' => 
@@ -46,8 +68,36 @@ class TemperatureController extends BaseController
             ]
         );
 
-        return $this->render('backend/temps.html.twig', [
-            'chart' => $chart
-        ]);
+        return $this->render('backend/temps.html.twig', 
+            [
+                'chart' => $chart
+            ]
+        );
+    }
+
+    private function getData()
+    {
+        $temperatures = $this->temperatureRepository->findAll();
+        $data = [];
+
+        foreach ($temperatures as $temperature)
+        {
+            $data[] = $temperature->getTemperature();
+        }
+
+        return $data;
+    }
+
+    private function getLabels()
+    {
+        $temperatures = $this->temperatureRepository->findAll();
+        $labels = [];
+
+        foreach ($temperatures as $temperature)
+        {
+            $labels[] = $temperature->getCreationTime()->format('H:i:s');
+        }
+
+        return $labels;
     }
 }

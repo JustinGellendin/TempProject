@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\SensorsRepository;
+use App\Repository\SensorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=SensorsRepository::class)
+ * @ORM\Entity(repositoryClass=SensorRepository::class)
  */
-class Sensors
+class Sensor
 {
     /**
      * @ORM\Id
@@ -35,25 +35,25 @@ class Sensors
     private $maxTemperature;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Manufacture::class, inversedBy="sensors")
+     * @ORM\ManyToOne(targetEntity=Manufacture::class, inversedBy="sensor")
      * @ORM\JoinColumn(nullable=false)
      */
     private $manufacture;
 
     /**
-     * @ORM\OneToMany(targetEntity=Temperatures::class, mappedBy="sensor")
+     * @ORM\OneToMany(targetEntity=Temperature::class, mappedBy="sensor")
      */
-    private $temperatures;
+    private $temperature;
 
     /**
-     * @ORM\OneToMany(targetEntity=Logs::class, mappedBy="sensor")
+     * @ORM\OneToMany(targetEntity=Log::class, mappedBy="sensor")
      */
-    private $logs;
+    private $log;
 
     public function __construct()
     {
-        $this->temperatures = new ArrayCollection();
-        $this->logs = new ArrayCollection();
+        $this->temperature = new ArrayCollection();
+        $this->log = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -110,28 +110,30 @@ class Sensors
     }
 
     /**
-     * @return Collection|Temperatures[]
+     * @return Collection|Temperature[]
      */
-    public function getTemperatures(): Collection
+    public function getTemperature(): Collection
     {
-        return $this->temperatures;
+        return $this->temperature;
     }
 
-    public function addTemperature(Temperatures $temperature): self
+    public function addTemperature(Temperature $temperature): self
     {
-        if (!$this->temperatures->contains($temperature)) {
-            $this->temperatures[] = $temperature;
+        if (!$this->temperature->contains($temperature)) 
+        {
+            $this->temperature[] = $temperature;
             $temperature->setSensor($this);
         }
 
         return $this;
     }
 
-    public function removeTemperature(Temperatures $temperature): self
+    public function removeTemperature(Temperature $temperature): self
     {
-        if ($this->temperatures->removeElement($temperature)) {
-            // set the owning side to null (unless already changed)
-            if ($temperature->getSensor() === $this) {
+        if ($this->temperature->removeElement($temperature)) 
+        {
+            if ($temperature->getSensor() === $this) 
+            {
                 $temperature->setSensor(null);
             }
         }
@@ -140,28 +142,30 @@ class Sensors
     }
 
     /**
-     * @return Collection|Logs[]
+     * @return Collection|Log[]
      */
-    public function getLogs(): Collection
+    public function getLog(): Collection
     {
-        return $this->logs;
+        return $this->log;
     }
 
-    public function addLog(Logs $log): self
+    public function addLog(Log $log): self
     {
-        if (!$this->logs->contains($log)) {
-            $this->logs[] = $log;
+        if (!$this->log->contains($log)) 
+        {
+            $this->log[] = $log;
             $log->setSensor($this);
         }
 
         return $this;
     }
 
-    public function removeLog(Logs $log): self
+    public function removeLog(Log $log): self
     {
-        if ($this->logs->removeElement($log)) {
-            // set the owning side to null (unless already changed)
-            if ($log->getSensor() === $this) {
+        if ($this->log->removeElement($log)) 
+        {
+            if ($log->getSensor() === $this) 
+            {
                 $log->setSensor(null);
             }
         }

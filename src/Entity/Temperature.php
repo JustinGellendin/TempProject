@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\TemperaturesRepository;
+use App\Repository\TemperatureRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=TemperaturesRepository::class)
+ * @ORM\Entity(repositoryClass=TemperatureRepository::class)
  */
-class Temperatures
+class Temperature
 {
     /**
      * @ORM\Id
@@ -28,7 +28,7 @@ class Temperatures
     private $creationTime;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Sensors::class, inversedBy="temperatures")
+     * @ORM\ManyToOne(targetEntity=Sensor::class, inversedBy="temperature")
      * @ORM\JoinColumn(nullable=false)
      */
     private $sensor;
@@ -62,12 +62,12 @@ class Temperatures
         return $this;
     }
 
-    public function getSensor(): ?Sensors
+    public function getSensor(): ?Sensor
     {
         return $this->sensor;
     }
 
-    public function setSensor(?Sensors $sensor): self
+    public function setSensor(?Sensor $sensor): self
     {
         $this->sensor = $sensor;
 

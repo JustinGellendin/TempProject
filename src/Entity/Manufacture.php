@@ -25,13 +25,13 @@ class Manufacture
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity=Sensors::class, mappedBy="manufacture")
+     * @ORM\OneToMany(targetEntity=Sensor::class, mappedBy="manufacture")
      */
-    private $sensors;
+    private $sensor;
 
     public function __construct()
     {
-        $this->sensors = new ArrayCollection();
+        $this->sensor = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -52,28 +52,30 @@ class Manufacture
     }
 
     /**
-     * @return Collection|Sensors[]
+     * @return Collection|Sensor[]
      */
-    public function getSensors(): Collection
+    public function getSensor(): Collection
     {
-        return $this->sensors;
+        return $this->sensor;
     }
 
-    public function addSensor(Sensors $sensor): self
+    public function addSensor(Sensor $sensor): self
     {
-        if (!$this->sensors->contains($sensor)) {
-            $this->sensors[] = $sensor;
+        if (!$this->sensor->contains($sensor)) 
+        {
+            $this->sensor[] = $sensor;
             $sensor->setManufacture($this);
         }
 
         return $this;
     }
 
-    public function removeSensor(Sensors $sensor): self
+    public function removeSensor(Sensor $sensor): self
     {
-        if ($this->sensors->removeElement($sensor)) {
-            // set the owning side to null (unless already changed)
-            if ($sensor->getManufacture() === $this) {
+        if ($this->sensor->removeElement($sensor)) 
+        {
+            if ($sensor->getManufacture() === $this) 
+            {
                 $sensor->setManufacture(null);
             }
         }
