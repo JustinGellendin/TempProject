@@ -79,6 +79,7 @@ public class TemperaturÜberwachung {
             }
         }
         Sensory.modifyAdress(con);
+        Sensory.modifyRack(con);
         //Datenbankverbindung schließen
         try{
         con.close();
