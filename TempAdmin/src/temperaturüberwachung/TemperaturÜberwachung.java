@@ -78,7 +78,7 @@ public class TemperaturÜberwachung {
                 System.out.println(e.getMessage());
             }
         }
-        Sensory.showInput(con);
+        Sensory.modifyAdress(con);
         //Datenbankverbindung schließen
         try{
         con.close();

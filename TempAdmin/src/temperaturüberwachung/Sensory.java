@@ -24,7 +24,7 @@ public class Sensory {
         try {
          Statement stmt = con.createStatement();
           ResultSet rs;
-          rs = stmt.executeQuery("SELECT * FROM sensors");
+          rs = stmt.executeQuery("SELECT * FROM sensor");
          displayResults(rs);
         }catch (SQLException e){
           System.out.println(e.getMessage());
@@ -42,7 +42,7 @@ public class Sensory {
         try {
          Statement stmt = con.createStatement();
           ResultSet rs;
-           rs = stmt.executeQuery("SELECT * FROM sensors WHERE id = "+id+"");
+           rs = stmt.executeQuery("SELECT * FROM sensor WHERE id = "+id+"");
             displayResults(rs);
         }catch(SQLException e){
          System.out.println(e.getMessage());
@@ -62,10 +62,10 @@ public class Sensory {
             try{
              Statement stmt = con.createStatement();
               ResultSet rs;
-               String query = "UPDATE sensors SET max_temperature = "+newMax+" WHERE id = "+id+"";
+               String query = "UPDATE sensor SET max_temperature = "+newMax+" WHERE id = "+id+"";
                 PreparedStatement preparedStmt = con.prepareStatement(query);
                  preparedStmt.executeUpdate();
-                  rs = stmt.executeQuery("SELECT * FROM sensors WHERE id = "+id+"");
+                  rs = stmt.executeQuery("SELECT * FROM sensor WHERE id = "+id+"");
                    displayResults(rs);
             }catch(SQLException e){
              System.out.println(e.getMessage());
@@ -76,32 +76,121 @@ public class Sensory {
         }
     }
     
-    public static void modifyManufac(){
+    public static void modifyManufac(Connection con){
+     showInput(con);
+      System.out.println("Bitte geben Sie die Nummer ein, um den Hersteller zu verändern");
+      Scanner sc = new Scanner(System.in);
+     int id = Integer.parseInt(sc.next());
+        
+        try {
+         Statement stmt = con.createStatement();
+          ResultSet rs;
+           rs = stmt.executeQuery("SELECT * FROM sensor WHERE id = "+id+"");
+            displayResults(rs);
+        }catch(SQLException e){
+         System.out.println(e.getMessage());
+        }
+        // Hier muss anders
+    }
+    
+
+    public static void modifyAdress(Connection con){
+        int id = modifyPrompt(con);
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Bitte geben Sie die neue Adresse für den Sensor ein.");
+             String newAdress = sc.nextLine();
+             System.out.println("newAdress: "+newAdress);
+            String yesNo = modifyAssure(sc);
+                   
+            if(yesNo.equals("Y") == true){
+                try{
+                 Statement stmt = con.createStatement();
+                 ResultSet rs;
+                  String query = "UPDATE sensor SET adress = '"+newAdress+"' WHERE id = "+id+"";
+                   PreparedStatement preparedStmt = con.prepareStatement(query);
+                    preparedStmt.executeUpdate();
+                    rs = stmt.executeQuery("SELECT * FROM sensor WHERE id = "+id+"");
+                    displayResults(rs);
+                }catch(SQLException e){
+                 System.out.println(e.getMessage());
+                }
+            }else{
+                System.out.println("Vorgang abgebrochen.");   
+                // return to menu? (monke, eehehe)
+            }
         
     }
     
-    public static void modifyAdress(){
+    public static void modifyRack(Connection con){
+     int id = modifyPrompt(con);
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Bitte geben Sie die neue Adresse für den Sensor ein.");
+             String newAdress = sc.nextLine();
+             System.out.println("newAdress: "+newAdress);
+            String yesNo = modifyAssure(sc);
+                   
+            if(yesNo.equals("Y") == true){
+                try{
+                 Statement stmt = con.createStatement();
+                 ResultSet rs;
+                  String query = "UPDATE sensor SET adress = '"+newAdress+"' WHERE id = "+id+"";
+                   PreparedStatement preparedStmt = con.prepareStatement(query);
+                    preparedStmt.executeUpdate();
+                    rs = stmt.executeQuery("SELECT * FROM sensor WHERE id = "+id+"");
+                    displayResults(rs);
+                }catch(SQLException e){
+                 System.out.println(e.getMessage());
+                }
+            }else{
+                System.out.println("Vorgang abgebrochen.");   
+                // return to menu? (monke, eehehe)
+            }
         
-    }
-    
-    public static void modifyRack(){
-    
     }
     
     public static void displayResults(ResultSet rs){
         try{
-          System.out.println("---------------------------------------------------");  
+          System.out.println("---------------------------------------------------------------");  
            while ( rs.next() ) {
-            String id = rs.getString("SensorNr");
-             String server = rs.getString("serverschrank");
-              String maxTemp = rs.getString("maximalTemperatur");
-               System.out.println("|*| Sensor Nummer:"+id+" | Schrank: "+server+" | MaxTemp: "+maxTemp+" |*|");
+            String id = rs.getString("id");
+             String server = rs.getString("server_rack");
+             String adress = rs.getString("adress");
+              String maxTemp = rs.getString("max_temperature");
+               System.out.println("|*| Sensor Nummer:"+id+" | Schrank: "+server+" | Adresse: "+adress+" | MaxTemp: "+maxTemp+" |*|");
             }   
-          System.out.println("---------------------------------------------------");
+          System.out.println("---------------------------------------------------------------");
         }catch(SQLException e){
          System.out.println(e.getMessage());
         }
     }   
+        public static Integer modifyPrompt(Connection con){
+        showInput(con);  
+      System.out.println("Bitte geben Sie die Nummer ein, um die Adresse zu verändern");
+      Scanner sc = new Scanner(System.in);
+     int id = Integer.parseInt(sc.next());
+        
+        try {
+         Statement stmt = con.createStatement();
+          ResultSet rs;
+           rs = stmt.executeQuery("SELECT * FROM sensor WHERE id = "+id+"");
+            displayResults(rs);
+        }catch(SQLException e){
+         System.out.println(e.getMessage());
+        }
+        return id;
+    }
+    
+    public static String modifyAssure(Scanner sc){
+          System.out.println("Wollen sie wirklich fortfahren? (Y/N)");
+               String yesNo = sc.next();
+               System.out.println("yesNo: "+yesNo);
+               
+        while(yesNo.equals("Y") == false && yesNo.equals("N") == false){
+         System.out.println("Das war nicht richtig. Wollen sie wirklich fortfahren? (Y/N)");
+          yesNo = sc.next();
+        }
+        return yesNo;
+    }
 } 
 
 
