@@ -24,30 +24,31 @@ public class Sensory {
         try {
          Statement stmt = con.createStatement();
           ResultSet rs;
-          rs = stmt.executeQuery("SELECT * FROM sensoren");
+          rs = stmt.executeQuery("SELECT * FROM sensors");
          displayResults(rs);
         }catch (SQLException e){
-         System.out.println("Fehler:");
           System.out.println(e.getMessage());
         }
         
-     System.out.println("Pidde geben Sie die Nummer ein, um die Maximaltemperatur zu verändern");
-      Scanner sc = new Scanner(System.in);
-       int id = Integer.parseInt(sc.next());
-        modifyMax(id, con);
+
+        
     }
     
-    public static void modifyMax(Integer selector, Connection con){
+    public static void modifyMax(Connection con){
+      System.out.println("Bitte geben Sie die Nummer ein, um die Maximaltemperatur zu verändern");
+      Scanner sc = new Scanner(System.in);
+     int id = Integer.parseInt(sc.next());
+        
         try {
          Statement stmt = con.createStatement();
           ResultSet rs;
-           rs = stmt.executeQuery("SELECT * FROM sensoren WHERE SensorNr = "+selector+"");
+           rs = stmt.executeQuery("SELECT * FROM sensors WHERE id = "+id+"");
             displayResults(rs);
         }catch(SQLException e){
-         System.out.println("ohney");
-          System.out.println(e.getMessage());}
+         System.out.println(e.getMessage());
+        }
+
            System.out.println("Bitte geben Sie die neue Maximaltemperatur für den Sensor ein.");
-            Scanner sc = new Scanner(System.in);
              int newMax = Integer.parseInt(sc.next());
               System.out.println("Wollen sie wirklich fortfahren? (Y/N)");
                String yesNo = sc.next();
@@ -61,10 +62,10 @@ public class Sensory {
             try{
              Statement stmt = con.createStatement();
               ResultSet rs;
-               String query = "UPDATE sensoren SET maximalTemperatur = "+newMax+" WHERE sensorNr = "+selector+"";
+               String query = "UPDATE sensors SET max_temperature = "+newMax+" WHERE id = "+id+"";
                 PreparedStatement preparedStmt = con.prepareStatement(query);
                  preparedStmt.executeUpdate();
-                  rs = stmt.executeQuery("SELECT * FROM sensoren WHERE SensorNr = "+selector+"");
+                  rs = stmt.executeQuery("SELECT * FROM sensors WHERE id = "+id+"");
                    displayResults(rs);
             }catch(SQLException e){
              System.out.println(e.getMessage());
@@ -75,6 +76,17 @@ public class Sensory {
         }
     }
     
+    public static void modifyManufac(){
+        
+    }
+    
+    public static void modifyAdress(){
+        
+    }
+    
+    public static void modifyRack(){
+    
+    }
     
     public static void displayResults(ResultSet rs){
         try{
