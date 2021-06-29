@@ -13,6 +13,7 @@ import java.util.Objects;
 /**
  *
  * @author samyo
+ * @author Jk
  */
 public class TemperaturÜberwachung {
 
@@ -77,7 +78,7 @@ public class TemperaturÜberwachung {
                 System.out.println(e.getMessage());
             }
         }
-        
+        Sensory.showInput(con);
         //Datenbankverbindung schließen
         try{
         con.close();

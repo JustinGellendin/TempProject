@@ -15,7 +15,7 @@ import java.util.Scanner;
  */
 
 
-public class calcInput {
+public class Sensory {
     
 
         
@@ -71,6 +71,7 @@ public class calcInput {
             }
         }else{
          System.out.println("Vorgang abgebrochen.");   
+         // return to menu?
         }
     }
     
