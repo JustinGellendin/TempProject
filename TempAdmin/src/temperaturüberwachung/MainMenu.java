@@ -1,13 +1,15 @@
 package temperaturüberwachung;
 
 import java.util.Scanner;
+import java.sql.Connection;
+import java.sql.DriverManager;
 
 /**
  *
  * @author samyo
  */
 public class MainMenu {
-    public static void menu(){
+    public static void menu(Connection con){
         int input = 0;
         boolean x = true;
         while (x)
@@ -16,9 +18,12 @@ public class MainMenu {
             System.out.println("1.Benutzer Anzeigen");
             System.out.println("2.Benutzer Anlegen");
             System.out.println("3.Log Einträge anzeigen");
-            System.out.println("4.");
-            System.out.println("5.");
-            System.out.println("6.Abbruch");
+            System.out.println("4.Maximaltemperatur ändern");
+            System.out.println("5.Hersteller ändern");
+            System.out.println("6.Adresse ändern");
+            System.out.println("7.Rack ändern");
+            System.out.println("8.??");
+            System.out.println("9.Abbruch");
         
             try
             {
@@ -43,12 +48,21 @@ public class MainMenu {
                     System.out.println("punkt 3");
                 break;
                 case 4:
-                    System.out.println("punkt 4");
+                    Sensory.modifyMax(con);
                 break;
                 case 5:
-                    System.out.println("punkt 5");
+                    Sensory.modifyManufac(con);
                 break;
                 case 6:
+                    Sensory.modifyAdress(con);
+                break;
+                case 7:
+                    Sensory.modifyRack(con);
+                break;
+                case 8:
+                    System.out.println("punkt 5");
+                break;
+                case 9:
                     x = false;
                 break;
                 default:
