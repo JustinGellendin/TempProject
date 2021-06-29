@@ -16,7 +16,7 @@ import java.util.Scanner;
 
 
 public class Sensory {
-      public static void modifyMax(Connection con){
+      public static void modifyMax(Connection con, String name){
       System.out.println("Bitte geben Sie die Nummer ein, um die Maximaltemperatur zu verändern");
       Scanner sc = new Scanner(System.in);
      int id = Integer.parseInt(sc.next());
@@ -26,6 +26,8 @@ public class Sensory {
           ResultSet rs;
            rs = stmt.executeQuery("SELECT * FROM sensor WHERE id = "+id+"");
             displayResults(rs);
+            int oldMax = Integer.parseInt(rs.getString("max_temperature"));
+            
         }catch(SQLException e){
          System.out.println(e.getMessage());
         }
@@ -57,7 +59,19 @@ public class Sensory {
          // return to menu?
         }
     }
-    
+    public static void createLog(Connection con, int newMax, int oldMax, int id){
+        try{
+            
+       
+     Statement stmt = con.createStatement();
+              ResultSet rs;
+               String query = "INSERT INTO log (user_id,sensor_id,creation_date,old_max_value,new_max_value) VALUES (7,"+id+",12/07/2021,"+oldMax+","+newMax+")";
+                PreparedStatement preparedStmt = con.prepareStatement(query);
+                 preparedStmt.executeUpdate();
+         }catch(SQLException e){
+             System.out.println(e.getMessage());
+         }
+    }
     public static void modifyManufac(Connection con){
      showInput(con);
       System.out.println("Bitte geben Sie die Nummer ein, um den Hersteller zu verändern");
@@ -107,7 +121,7 @@ public class Sensory {
      int id = modifyPrompt(con);
         Scanner sc = new Scanner(System.in);
         System.out.println("Bitte geben Sie das neue Rack für den Sensor ein.");
-             String newRack = sc.nextLine();
+             int newRack = Integer.parseInt(sc.nextLine());
              System.out.println("newRack: "+newRack);
             String yesNo = modifyAssure(sc);
                    

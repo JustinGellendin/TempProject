@@ -35,7 +35,7 @@ public class TemperaturÜberwachung {
             System.out.println("Fehler:");
             System.out.println(e.getMessage());
         }
-        
+        String name = null;
         //Anmeldung
         System.out.println("Willkommen in der Temperaturüberachung! Bitte Anmelden");
         while(auth == false)
@@ -43,7 +43,7 @@ public class TemperaturÜberwachung {
             //Benutzerinteraktion und Anmeldeinfos einlesen
             System.out.println("Nutzername:");
             Scanner sc = new Scanner(System.in);
-            String name = sc.next();
+            name = sc.next();
             System.out.println("Passwort:");
             String passw = sc.next();
             
@@ -78,7 +78,7 @@ public class TemperaturÜberwachung {
                 System.out.println(e.getMessage());
             }
         }
-        MainMenu.menu();
+        MainMenu.menu(con, name);
         //Datenbankverbindung schließen
         try{
         con.close();

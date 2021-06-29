@@ -9,7 +9,7 @@ import java.sql.DriverManager;
  * @author samyo
  */
 public class MainMenu {
-    public static void menu(Connection con){
+    public static void menu(Connection con, String name){
         int input = 0;
         boolean x = true;
         while (x)
