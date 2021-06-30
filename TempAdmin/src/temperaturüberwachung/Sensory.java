@@ -79,20 +79,45 @@ public class Sensory {
          }
     }
     public static void modifyManufac(Connection con){
-     showInput(con);
-      System.out.println("Bitte geben Sie die Nummer ein, um den Hersteller zu verändern");
-      Scanner sc = new Scanner(System.in);
-     int id = Integer.parseInt(sc.next());
-        
-        try {
+     int id = modifyPrompt(con);
+    Scanner sc = new Scanner(System.in);
+    try {
          Statement stmt = con.createStatement();
           ResultSet rs;
-           rs = stmt.executeQuery("SELECT * FROM sensor WHERE id = "+id+"");
-            displayResults(rs);
+           rs = stmt.executeQuery("SELECT * FROM manufacture");
+           System.out.println("---------------------------------------------");  
+           while ( rs.next() ) {
+            String manu_id = rs.getString("id");
+             String manu_name = rs.getString("name");
+               System.out.println("|*| Hersteller Nummer:"+manu_id+" | Name: "+manu_name+" |*|");
+            }   
+           System.out.println("---------------------------------------------");
+            
         }catch(SQLException e){
          System.out.println(e.getMessage());
         }
-        // Hier muss anders
+ System.out.println("Bitte geben Sie die ID des neuen Herstellers an. (1,2,3...)");
+
+         String newManu = sc.nextLine();
+     
+        String yesNo = modifyAssure(sc);
+
+        if(yesNo.equals("Y") == true){
+            try{
+             Statement stmt = con.createStatement();
+             ResultSet rs;
+              String query = "UPDATE sensor SET manufacture_id = '"+newManu+"' WHERE id = "+id+"";
+               PreparedStatement preparedStmt = con.prepareStatement(query);
+                preparedStmt.executeUpdate();
+                rs = stmt.executeQuery("SELECT * FROM sensor WHERE id = "+id+"");
+                displayResults(rs);
+            }catch(SQLException e){
+             System.out.println(e.getMessage());
+            }
+        }else{
+            System.out.println("Vorgang abgebrochen.");   
+            // return to menu? (monke, eehehe)
+        }  
     }
     public static void modifyAdress(Connection con){
     int id = modifyPrompt(con);
@@ -147,15 +172,16 @@ public class Sensory {
     public static String displayResults(ResultSet rs){
        String maxTemp = "";
         try{
-          System.out.println("---------------------------------------------------------------");  
+          System.out.println("------------------------------------------------------------------------------------------------");  
            while ( rs.next() ) {
             String id = rs.getString("id");
              String server = rs.getString("server_rack");
              String adress = rs.getString("adress");
               maxTemp = rs.getString("max_temperature");
-               System.out.println("|*| Sensor Nummer:"+id+" | Schrank: "+server+" | Adresse: "+adress+" | MaxTemp: "+maxTemp+" |*|");
+              String manu = rs.getString("manufacture_id");
+               System.out.println("|*| Sensor Nummer:"+id+" | Schrank: "+server+" | Adresse: "+adress+" | MaxTemp: "+maxTemp+" | Hersteller: "+manu+"|*|");
             }   
-          System.out.println("---------------------------------------------------------------");
+          System.out.println("------------------------------------------------------------------------------------------------");
         }catch(SQLException e){
          System.out.println(e.getMessage());
         }
