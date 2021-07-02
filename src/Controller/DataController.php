@@ -23,8 +23,12 @@ class DataController extends BaseController
      */
     public function data():Response
     {
-        VAR_DUMP($this->temperatureRepository->getData());
+        $data = $this->temperatureRepository->getData();
 
-        return $this->render('backend/data.html.twig');
+        return $this->render('backend/data.html.twig', 
+            [
+                'data' => $data
+            ]
+        );
     }
 }

@@ -21,6 +21,9 @@ class TemperatureRepository extends ServiceEntityRepository
     public function getData()
     {
         $query = $this->createQueryBuilder('d')
+        ->select('d', 's')
+        ->leftJoin('d.sensor', 's')
+        ->orderBy('d.creationTime', 'DESC')
         ->setMaxResults(10)
         ->getQuery()
         ->getResult();

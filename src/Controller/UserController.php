@@ -63,7 +63,8 @@ class UserController extends BaseController
                     $form->get('plainPassword')->getData()
                 )
             )
-            ->setRegistrationDate(new \DateTime('now'));;
+            ->setRoles(['ROLE_ADMIN'])
+            ->setRegistrationDate(new \DateTime('now'));
 
             $this->entityManager->persist($user);
             $this->entityManager->flush();

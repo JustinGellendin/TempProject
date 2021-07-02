@@ -12,8 +12,28 @@
                     <div class="container">
                             <div class="content-box">
                                 <h3 class="title">
-                                    <i class="fas fa-chart-line"></i>Sensordaten
+                                    <i class="fas fa-database"></i>Daten
                                 </h3>
+                                <table class="tg">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Hersteller</th>
+                                    <th>Temperatur</th>
+                                    <th>Höchste Temperatur</th>
+                                    <th>Durchschnittliche Temperatur</th>
+                                    <th>Datum</th>
+                                </tr>
+                                {% for value in data %}
+                                    <tr>
+                                        <td class="tg-031e">{{ value.id }}</td>
+                                        <td class="tg-031e">{{ value.sensor.manufacture.name }}</td>
+                                        <td class="tg-031e">{{ value.temperature }} °C</td>
+                                        <td class="tg-031e">{{ value.sensor.maxTemperature }} °C</td>
+                                        <td class="tg-031e"></td>
+                                        <td class="tg-031e">{{ value.creationTime|date("d.m.Y H:i:s") }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </table>
                             </div>
                         </div>
                     </div>

@@ -34,6 +34,16 @@ class Log
      */
     private $creationDate;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $oldMaxTemperature;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $newMaxTemperature;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -71,6 +81,30 @@ class Log
     public function setCreationDate(\DateTimeInterface $creationDate): self
     {
         $this->creationDate = $creationDate;
+
+        return $this;
+    }
+
+    public function getOldMaxTemperature(): ?float
+    {
+        return $this->oldMaxTemperature;
+    }
+
+    public function setOldMaxTemperature(?float $oldMaxTemperature): self
+    {
+        $this->oldMaxTemperature = $oldMaxTemperature;
+
+        return $this;
+    }
+
+    public function getNewMaxTemperature(): ?float
+    {
+        return $this->newMaxTemperature;
+    }
+
+    public function setNewMaxTemperature(float $newMaxTemperature): self
+    {
+        $this->newMaxTemperature = $newMaxTemperature;
 
         return $this;
     }
