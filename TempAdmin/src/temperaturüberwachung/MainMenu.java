@@ -2,14 +2,14 @@ package temperaturüberwachung;
 
 import java.util.Scanner;
 import java.sql.Connection;
-
+import java.sql.DriverManager;
 
 /**
  *
  * @author samyo
  */
 public class MainMenu {
-    public static void menu(Connection con){
+    public static void menu(Connection con, String name){
         int input = 0;
         boolean x = true;
         while (x)
@@ -18,9 +18,12 @@ public class MainMenu {
             System.out.println("1.Benutzer Anzeigen");
             System.out.println("2.Benutzer Anlegen");
             System.out.println("3.Log Einträge anzeigen");
-            System.out.println("4.");
-            System.out.println("5.");
-            System.out.println("6.Abbruch");
+            System.out.println("4.Maximaltemperatur ändern");
+            System.out.println("5.Hersteller ändern");
+            System.out.println("6.Adresse ändern");
+            System.out.println("7.Rack ändern");
+            System.out.println("8.??");
+            System.out.println("9.Abbruch");
         
             try
             {
@@ -36,21 +39,30 @@ public class MainMenu {
             switch(input)
             {
                 case 1:
-                    System.out.println("punkt 1");
+                    Menupoints.DisplayUser(con);
                 break;
                 case 2:
-                    System.out.println("punkt 2");
+                    Menupoints.AddUser(con);
                 break;
                 case 3:
-                    System.out.println("punkt 3");
+                    Sensory.showLogs(con);
                 break;
                 case 4:
-                    System.out.println("punkt 4");
+                    Sensory.modifyMax(con, name);
                 break;
                 case 5:
-                    System.out.println("punkt 5");
+                    Sensory.modifyManufac(con);
                 break;
                 case 6:
+                    Sensory.modifyAdress(con);
+                break;
+                case 7:
+                    Sensory.modifyRack(con);
+                break;
+                case 8:
+                    System.out.println("punkt 5");
+                break;
+                case 9:
                     x = false;
                 break;
                 default:
