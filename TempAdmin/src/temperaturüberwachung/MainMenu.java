@@ -39,11 +39,10 @@ public class MainMenu {
             switch(input)
             {
                 case 1:
-                    System.out.println("punkt 1");
+                    Menupoints.DisplayUser(con);
                 break;
                 case 2:
-                    System.out.println("punkt 2");
-                break;
+                    Menupoints.AddUser(con);
                 case 3:
                     System.out.println("punkt 3");
                 break;
