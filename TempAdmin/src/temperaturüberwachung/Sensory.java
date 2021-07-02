@@ -6,7 +6,6 @@
 package temperaturüberwachung;
 
 import java.sql.*;
-import java.text.ParseException;
 import java.util.Scanner;
 
 /**
@@ -143,6 +142,51 @@ public class Sensory {
             System.out.println("Vorgang abgebrochen.");   
             // return to menu? (monke, eehehe)
         }  
+    }
+    
+    public static void showLogs(Connection con){
+        try{
+          Statement stmt = con.createStatement();
+      ResultSet rs;
+      rs = stmt.executeQuery("SELECT COUNT(*) FROM `log`");
+      rs.next();
+      int dooku = rs.getInt("COUNT(*)");
+      rs = stmt.executeQuery("SELECT * FROM `log`");
+      rs.first();
+       int sel = 0;
+       
+    Scanner sc = new Scanner(System.in);
+    System.out.println("Bitte geben Sie die Seite der Logs ein, die angezeigt werden soll.");
+    int dookucalc = Math.round(dooku / 10);
+   
+    System.out.println("Seite ["+sel+"] von ["+dookucalc+"]");
+   actualDisplay(rs, dooku, sel);
+         sel = sc.nextInt();
+      
+      
+  
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public static void actualDisplay(ResultSet rs, int dooku, int sel){
+        int sel2 = 0;
+        if (sel != 0){
+            sel2 = sel*10;
+        }
+        try{
+           rs.absolute(sel2);
+            while ( rs.next() && rs.getRow() < sel2+10 ) {
+            String id = rs.getString("id");
+
+               System.out.println("|*| Log Nummer:"+id+"");
+            }    
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+            
+      
     }
     public static void modifyRack(Connection con){
      int id = modifyPrompt(con);
