@@ -44,7 +44,7 @@ public class MainMenu {
                 case 2:
                     Menupoints.AddUser(con);
                 case 3:
-                    System.out.println("punkt 3");
+                    Sensory.showLogs(con);
                 break;
                 case 4:
                     Sensory.modifyMax(con, name);
