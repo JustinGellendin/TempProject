@@ -22,15 +22,17 @@ public class Menupoints {
             String abfrage = "SELECT * FROM user";
             ResultSet rs = stm.executeQuery(abfrage);
             
+            System.out.println("\nBenutzer:\n------------------------------------------------------------------");
             while(rs.next())
             {
-                System.out.println("\n------------------------------------------------------------------");
+                
                 System.out.println( "ID: " + rs.getString(1) + 
                                     "\tBenutzername: " + rs.getString(2) + 
                                     "\tRolle: " + rs.getString(3) + 
                                     "\tAktiv: " + rs.getString(6));
-                System.out.println("------------------------------------------------------------------\n");
+                
             }
+            System.out.println("------------------------------------------------------------------\n");
         }
         catch(Exception e)
         {

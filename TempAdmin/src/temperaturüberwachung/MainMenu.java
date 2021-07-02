@@ -14,7 +14,8 @@ public class MainMenu {
         boolean x = true;
         while (x)
         {
-            System.out.println("Hauptmenü:");
+            System.out.println("\nHauptmenü:");
+            System.out.println("-----------------------------------------");
             System.out.println("1.Benutzer Anzeigen");
             System.out.println("2.Benutzer Anlegen");
             System.out.println("3.Log Einträge anzeigen");
@@ -23,7 +24,7 @@ public class MainMenu {
             System.out.println("6.Adresse ändern");
             System.out.println("7.Rack ändern");
             System.out.println("8.??");
-            System.out.println("9.Abbruch");
+            System.out.println("9.Abbruch\n");
         
             try
             {
