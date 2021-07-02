@@ -150,13 +150,13 @@ public class Sensory {
          ResultSet rs;
          rs = stmt.executeQuery("SELECT COUNT(*) FROM `log`");
          rs.next();
-         int dooku = rs.getInt("COUNT(*)");
+         double dooku = rs.getDouble("COUNT(*)");
          rs = stmt.executeQuery("SELECT * FROM `log`");
          rs.first();
          int sel = 0;
          String selS = "";
          Scanner sc = new Scanner(System.in);
-         int dookucalc = Math.round(dooku / 10);
+         int dookucalc = (int) Math.ceil(dooku / 10);
          int selshow = sel+1;
          System.out.println("Seite ["+selshow+"] von ["+dookucalc+"]");
          actualDisplay(rs, dooku, sel);
@@ -182,7 +182,7 @@ public class Sensory {
         }
     }
     
-    public static void actualDisplay(ResultSet rs, int dooku, int sel){
+    public static void actualDisplay(ResultSet rs, double dooku, int sel){
         int sel2 = 0;
         if (sel != 0){
             sel2 = sel*10;
