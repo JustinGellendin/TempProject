@@ -55,7 +55,7 @@ public class TemperaturÜberwachung {
             //prüft ob Passwörter und nutzernamen übereinstimmen
             try
             {
-                while(rs.next()){
+                while(rs.next() && auth == false){
                     String nn = rs.getString(2);
                     String hash = rs.getString(5);
                     BCrypt.Result result = BCrypt.verifyer(BCrypt.Version.VERSION_2Y)
@@ -66,10 +66,10 @@ public class TemperaturÜberwachung {
                         System.out.println("Herzlich Willkommen " + name + "!");
                         auth = true;
                     }
-                else
-                    {
-                        System.out.println("Passwort oder Nutzername falsch, bitte wiederholen!");
-                    }
+                }
+                if (auth == false)
+                {
+                    System.out.println("Passwort oder Nutzername falsch, bitte wiederholen!");
                 }
             }
             catch (Exception e)
