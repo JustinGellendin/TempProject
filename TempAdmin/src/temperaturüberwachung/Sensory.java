@@ -145,28 +145,40 @@ public class Sensory {
     }
     
     public static void showLogs(Connection con){
-        try{
-          Statement stmt = con.createStatement();
-      ResultSet rs;
-      rs = stmt.executeQuery("SELECT COUNT(*) FROM `log`");
-      rs.next();
-      int dooku = rs.getInt("COUNT(*)");
-      rs = stmt.executeQuery("SELECT * FROM `log`");
-      rs.first();
-       int sel = 0;
-       
-    Scanner sc = new Scanner(System.in);
-    System.out.println("Bitte geben Sie die Seite der Logs ein, die angezeigt werden soll.");
-    int dookucalc = Math.round(dooku / 10);
-   
-    System.out.println("Seite ["+sel+"] von ["+dookucalc+"]");
-   actualDisplay(rs, dooku, sel);
-         sel = sc.nextInt();
-      
-      
-  
-        }catch(SQLException e){
+     try{
+         Statement stmt = con.createStatement();
+         ResultSet rs;
+         rs = stmt.executeQuery("SELECT COUNT(*) FROM `log`");
+         rs.next();
+         int dooku = rs.getInt("COUNT(*)");
+         rs = stmt.executeQuery("SELECT * FROM `log`");
+         rs.first();
+         int sel = 0;
+         String selS = "";
+         Scanner sc = new Scanner(System.in);
+         int dookucalc = Math.round(dooku / 10);
+         int selshow = sel+1;
+         System.out.println("Seite ["+selshow+"] von ["+dookucalc+"]");
+         actualDisplay(rs, dooku, sel);
+         boolean fin = false;
+         
+            while (fin == false){
+             System.out.println("Bitte geben Sie die Seite der Logs ein, die angezeigt werden soll.");
+             System.out.println("Seite ["+selshow+"] von ["+dookucalc+"]");
+             System.out.println("Geben sie 'exit' zum Verlassen ein.");
+             selS = sc.nextLine();
+                try{
+                 sel = Integer.parseInt(selS)-1;
+                }catch(NumberFormatException e){
+                 fin = true;    
+                }
+                 actualDisplay(rs, dooku, sel);
+                }
+       }catch(SQLException e){
             System.out.println(e.getMessage());
+        
+        
+        
         }
     }
     
@@ -177,7 +189,7 @@ public class Sensory {
         }
         try{
            rs.absolute(sel2);
-            while ( rs.next() && rs.getRow() < sel2+10 ) {
+            while ( rs.next() && rs.getRow() < sel2+11 ) {
             String id = rs.getString("id");
 
                System.out.println("|*| Log Nummer:"+id+"");
