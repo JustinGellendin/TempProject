@@ -28,22 +28,23 @@ public class TemperaturÜberwachung {
         
         try {
         // Verbindung aufbauen
-        con = DriverManager.getConnection(url, user, pass);
-        System.out.println("Verbindung erfolgreich hergestellt");
+            con = DriverManager.getConnection(url, user, pass);
+            System.out.println("Verbindung erfolgreich hergestellt");
         } 
         catch (SQLException e) {
             System.out.println("Fehler:");
             System.out.println(e.getMessage());
         }
-        
+        String name = null;
         //Anmeldung
         System.out.println("Willkommen in der Temperaturüberachung! Bitte Anmelden");
-        while(auth == false)
+        
+        while(!auth)
         {
             //Benutzerinteraktion und Anmeldeinfos einlesen
             System.out.println("Nutzername:");
             Scanner sc = new Scanner(System.in);
-            String name = sc.next();
+            name = sc.next();
             System.out.println("Passwort:");
             String passw = sc.next();
             
@@ -55,33 +56,38 @@ public class TemperaturÜberwachung {
             //prüft ob Passwörter und nutzernamen übereinstimmen
             try
             {
-                while(rs.next()){
+                while(rs.next() && !auth) 
+                {
                     String nn = rs.getString(2);
                     String hash = rs.getString(5);
                     BCrypt.Result result = BCrypt.verifyer(BCrypt.Version.VERSION_2Y)
                         .verifyStrict(passw.getBytes(StandardCharsets.UTF_8), hash.getBytes(StandardCharsets.UTF_8));
                 
-                if(result.verified && Objects.equals(nn, name))
+                if(result.verified && nn.equalsIgnoreCase(name))
                     {
                         System.out.println("Herzlich Willkommen " + name + "!");
                         auth = true;
                     }
-                else
-                    {
-                        System.out.println("Passwort oder Nutzername falsch, bitte wiederholen!");
-                    }
-                }
+                }    
             }
+            
             catch (Exception e)
             {
                 System.out.println("Fehler:");
                 System.out.println(e.getMessage());
             }
+            
+            if (!auth)
+            {
+                System.out.println("Passwort oder Nutzername falsch, bitte wiederholen!");
+            }
         }
-        MainMenu.menu();
+        
+        MainMenu.menu(con, name);
         //Datenbankverbindung schließen
-        try{
-        con.close();
+        try 
+        {
+            con.close();
         }
         catch(Exception e)
         {

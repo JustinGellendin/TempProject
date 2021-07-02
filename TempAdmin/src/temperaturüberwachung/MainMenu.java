@@ -9,7 +9,7 @@ import java.sql.DriverManager;
  * @author samyo
  */
 public class MainMenu {
-    public static void menu(Connection con){
+    public static void menu(Connection con, String name){
         int input = 0;
         boolean x = true;
         while (x)
@@ -39,16 +39,16 @@ public class MainMenu {
             switch(input)
             {
                 case 1:
-                    System.out.println("punkt 1");
+                    Menupoints.DisplayUser(con);
                 break;
                 case 2:
-                    System.out.println("punkt 2");
+                    Menupoints.AddUser(con);
                 break;
                 case 3:
-                    System.out.println("punkt 3");
+                    Sensory.showLogs(con);
                 break;
                 case 4:
-                    Sensory.modifyMax(con);
+                    Sensory.modifyMax(con, name);
                 break;
                 case 5:
                     Sensory.modifyManufac(con);
