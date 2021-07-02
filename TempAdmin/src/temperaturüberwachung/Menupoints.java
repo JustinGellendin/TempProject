@@ -2,8 +2,11 @@ package temperaturüberwachung;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.Scanner;
 
 /**
@@ -56,22 +59,26 @@ public class Menupoints {
         
         if(role.equals("A"))
         {
-            role = "ROLE_ADMIN";
+            role = "[\"ROLE_ADMIN\"]";
         }
         if(role.equals("U"))
         {
-            role = "ROLE_USER";
+            role = "[\"ROLE_USER\"]";
         }
         
         password = BCrypt.withDefaults().hashToString(10, password.toCharArray());
-        System.out.println(password);
         
         try
-        {
-            Statement stm = con.createStatement();
-            String abfrage = "INSERT INTO user (username, roles, password, registration_date) "
-                    + "VALUES (" + username + ", " + role + ", " + password + ", NOW());";
-            ResultSet rs = stm.executeQuery(abfrage);
+        {  
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            
+            String query = "INSERT INTO user (username, roles, password, registration_date) "
+                    + "VALUES ('" + username + "','" + role + "','" + password + "','" + timestamp +"');";
+            
+            PreparedStatement preparedStmt = con.prepareStatement(query);
+            preparedStmt.executeUpdate();
+
+            preparedStmt.executeUpdate();
         }
         catch(Exception e)
         {

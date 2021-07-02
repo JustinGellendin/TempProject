@@ -43,6 +43,7 @@ public class MainMenu {
                 break;
                 case 2:
                     Menupoints.AddUser(con);
+                break;
                 case 3:
                     Sensory.showLogs(con);
                 break;
