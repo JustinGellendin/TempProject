@@ -228,8 +228,13 @@ public class Sensory {
            rs.absolute(sel2);
             while ( rs.next() && rs.getRow() < sel2+11 ) {
             String id = rs.getString("id");
+            String userid = rs.getString("user_id");
+            String sensorid = rs.getString("sensor_id");
+            String creationdate = rs.getString("creation_date");
+            String oldmax = rs.getString("old_max_temperature");
+             String newmax = rs.getString("new_max_temperature");       
 
-               System.out.println("|*| Log Nummer:"+id+"");
+               System.out.println("|*| Log Nummer:"+id+" | User: "+userid+" | Sensor: "+sensorid+" | Alt: "+oldmax+" | Neu: "+newmax+" | Datum: "+creationdate+" |*|");
             }    
         }catch(SQLException e){
             System.out.println(e.getMessage());
