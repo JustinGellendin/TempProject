@@ -77,6 +77,43 @@ public class Sensory {
              System.out.println(e.getMessage());
          }
     }
+    
+    public static void addSensor(Connection con){
+        showInput(con);
+        
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Bitte geben Sie ein Rack ein (1,2,3...");
+        int rack = sc.nextInt();
+        System.out.println("Bitte geben Sie die die Adresse ein");
+        String adress = sc.nextLine();
+        adress = sc.nextLine();
+            try {
+         Statement stmt = con.createStatement();
+          ResultSet rs;
+           rs = stmt.executeQuery("SELECT * FROM manufacture");
+           System.out.println("---------------------------------------------");  
+           while ( rs.next() ) {
+            String manu_id = rs.getString("id");
+             String manu_name = rs.getString("name");
+               System.out.println("|*| Hersteller Nummer:"+manu_id+" | Name: "+manu_name+" |*|");
+            }   
+           System.out.println("---------------------------------------------");
+           System.out.println("");
+           System.out.println("Bitte wählen Sie einen Hersteller aus (Hersteller-Nummer)");
+           int manu = sc.nextInt();
+           System.out.println("Standard MaxTemp wird 25. Dies kann unter Punkt 4 geändert werden.");
+           modifyAssure(sc);
+            String query = "INSERT INTO sensor (manufacture_id,server_rack,adress,max_temperature) VALUES ("+manu+","+rack+",'"+adress+"','25')";
+                PreparedStatement preparedStmt = con.prepareStatement(query);
+                 preparedStmt.executeUpdate();
+                 showInput(con);
+                 
+            
+        }catch(SQLException e){
+         System.out.println(e.getMessage());
+        }
+        
+    }
     public static void modifyManufac(Connection con){
      int id = modifyPrompt(con);
     Scanner sc = new Scanner(System.in);
@@ -150,13 +187,13 @@ public class Sensory {
          ResultSet rs;
          rs = stmt.executeQuery("SELECT COUNT(*) FROM `log`");
          rs.next();
-         int dooku = rs.getInt("COUNT(*)");
+         double dooku = rs.getDouble("COUNT(*)");
          rs = stmt.executeQuery("SELECT * FROM `log`");
          rs.first();
          int sel = 0;
          String selS = "";
          Scanner sc = new Scanner(System.in);
-         int dookucalc = Math.round(dooku / 10);
+         int dookucalc = (int) Math.ceil(dooku / 10);
          int selshow = sel+1;
          System.out.println("Seite ["+selshow+"] von ["+dookucalc+"]");
          actualDisplay(rs, dooku, sel);
@@ -182,7 +219,7 @@ public class Sensory {
         }
     }
     
-    public static void actualDisplay(ResultSet rs, int dooku, int sel){
+    public static void actualDisplay(ResultSet rs, double dooku, int sel){
         int sel2 = 0;
         if (sel != 0){
             sel2 = sel*10;

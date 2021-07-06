@@ -23,8 +23,8 @@ public class MainMenu {
             System.out.println("5.Hersteller ändern");
             System.out.println("6.Adresse ändern");
             System.out.println("7.Rack ändern");
-            System.out.println("8.??");
-            System.out.println("9.Abbruch\n");
+            System.out.println("8.Sensor hinzufügen");
+            System.out.println("9.Abbruch");
         
             try
             {
@@ -61,7 +61,7 @@ public class MainMenu {
                     Sensory.modifyRack(con);
                 break;
                 case 8:
-                    System.out.println("punkt 5");
+                    Sensory.addSensor(con);
                 break;
                 case 9:
                     x = false;
