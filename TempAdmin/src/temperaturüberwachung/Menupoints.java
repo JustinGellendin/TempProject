@@ -51,14 +51,12 @@ public class Menupoints {
         String password = sc.next();
         System.out.println("Rolle Admin oder User: (A/U)");
         String role = sc.next();
-        
-        
+         
         while(role.equals("A") == false && role.equals("U") == false)
         {
             System.out.println("Bitte Eingabe überprüfen und wiederholen!");
             role = sc.next();
         }
-        
         if(role.equals("A"))
         {
             role = "[\"ROLE_ADMIN\"]";
@@ -67,7 +65,6 @@ public class Menupoints {
         {
             role = "[\"ROLE_USER\"]";
         }
-        
         password = BCrypt.withDefaults().hashToString(10, password.toCharArray());
         
         try

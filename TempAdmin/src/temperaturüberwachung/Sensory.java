@@ -211,11 +211,8 @@ public class Sensory {
                 }
                  actualDisplay(rs, dooku, sel);
                 }
-       }catch(SQLException e){
-            System.out.println(e.getMessage());
-        
-        
-        
+        }catch(SQLException e){
+         System.out.println(e.getMessage());
         }
     }
     
